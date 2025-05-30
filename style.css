@@ -1,0 +1,497 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.current-date {
+    position: absolute;
+    top: 1.5rem; 
+    right: 1.5rem; 
+    font-size: 0.875rem; 
+    color: #4A5568; 
+}
+
+.container-reincidencia-ativa {
+    background-color: #fee2e2 !important; 
+    border: 3px solid #ef4444 !important; 
+    box-shadow: 0 0 15px 5px rgba(239, 68, 68, 0.4) !important;
+}
+
+.print-watermark {
+    display: none; 
+    position: absolute;
+    top: 45%; 
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg); 
+    font-size: 5rem; 
+    color: rgba(239, 68, 68, 0.15); 
+    font-weight: bold;
+    z-index: 0; 
+    pointer-events: none; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 2px dashed rgba(239, 68, 68, 0.25); 
+    padding: 10px 20px;
+    white-space: nowrap; 
+}
+
+.image-placeholder { 
+    width: 100%;
+    min-height: 150px; 
+    background-color: #e9ecef;
+    border: 2px dashed #ced4da;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 0.375rem;
+    text-align: center;
+    color: #6c757d;
+    padding: 1rem; 
+}
+
+#preview_relatorio_antigo_container img.full-width-image-preview {
+    width: 100%; 
+    max-width: 100%; 
+    height: auto;   
+    object-fit: contain; 
+    border-radius: 0.375rem; 
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+
+#preview_evidencia_container_novo {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 8px; 
+    margin-top: 8px;
+}
+#preview_evidencia_container_novo.has-single-image-print { 
+    justify-content: center !important;
+}
+
+.evidencia-item-wrapper {
+    position: relative;
+    max-width: 250px; 
+    max-height: 250px;
+}
+
+#preview_evidencia_container_novo img {
+    max-width: 100%; 
+    max-height: 250px; 
+    object-fit: contain;
+    border-radius: 0.375rem; 
+    border: 1px solid #ddd;
+    padding: 2px;
+    background-color: #fff;
+    display: block;
+}
+
+.delete-evidencia-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: rgba(239, 68, 68, 0.8); 
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px; 
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.delete-evidencia-btn:hover {
+    background-color: #ef4444; 
+}
+
+textarea::-webkit-scrollbar {
+    width: 8px;
+}
+textarea::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+textarea::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+textarea::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.form-label {
+    font-weight: 500;
+    color: #374151; 
+}
+.form-input, .form-textarea, .form-select { 
+    border-color: #D1D5DB; 
+}
+.form-select {
+    height: 42px; 
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#rota_novo {
+    text-transform: uppercase;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: #2563EB; 
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); 
+}
+.form-radio, .form-checkbox { 
+    color: #2563EB; 
+}
+.form-radio:focus, .form-checkbox:focus {
+     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.auto-resize-textarea {
+    overflow-y: hidden; 
+    resize: none; 
+    min-height: 42px; 
+    line-height: 1.5; 
+}
+
+.print-only-block {
+    display: none;
+}
+
+.print-only-textarea-content { 
+    display: none; 
+}
+
+
+/* Estilos de Impressão */
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        padding: 5mm !important; 
+        margin: 0 !important;
+        font-size: 10pt !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .container {
+        width: 100% !important; max-width: 100% !important;
+        box-shadow: none !important; border: none !important;
+        padding: 0 !important; 
+        margin: 0 !important;
+        border-radius: 0 !important;
+        position: relative !important; 
+        background-color: #ffffff !important; 
+    }
+    .current-date { 
+        display: block !important;
+        position: absolute !important;
+        top: 0.3cm !important; 
+        right: 0.5cm !important; 
+        font-size: 9pt !important;
+        color: #000000 !important;
+        z-index: 10010 !important; 
+    }
+    
+    #reincidenciaAvisoPrint.print-watermark-visible { 
+        display: flex !important; 
+        align-items: center !important;
+        justify-content: center !important;
+        position: fixed !important; 
+        top: 50% !important; 
+        left: 50% !important; 
+        width: auto !important; 
+        height: auto !important; 
+        font-size: 6.5rem !important;
+        color: rgba(239, 68, 68, 0.1) !important; 
+        font-weight: bold !important;
+        text-transform: uppercase !important;
+        letter-spacing: 2px !important;
+        transform: translate(-50%, -50%) rotate(-35deg) !important; 
+        z-index: 9999 !important; 
+        pointer-events: none !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        border: 5px dashed rgba(239, 68, 68, 0.15) !important; 
+        padding: 15px 30px !important;
+        box-sizing: border-box !important;
+        border-radius: 25px !important;
+    }
+    #reincidenciaAvisoPrint:not(.print-watermark-visible) { 
+        display: none !important;
+    }
+
+    .container.container-reincidencia-ativa-print > section,
+    .container.container-reincidencia-ativa-print > div:not(#reincidenciaAvisoPrint):not(.current-date) {
+        background-color: #ffffff !important; 
+        border: none !important; 
+    }
+
+    #secaoRelatorioAntigo { 
+        display: block !important; 
+        margin-bottom: 10px !important; 
+        page-break-before: auto !important; 
+        background-color: #ffffff !important; 
+        border: none !important; 
+    }
+    #secaoAnexarEvidencia { 
+        display: block !important; 
+        margin-bottom: 10px !important; 
+        page-break-before: always !important; 
+        background-color: #ffffff !important; 
+        border: none !important; 
+    }
+     #preview_relatorio_antigo_container:empty {
+        page-break-before: avoid !important; 
+    }
+
+    header, 
+    button.bg-green-600, 
+    #mensagemErro,
+    #evidencia_problema_novo, #relatorio_antigo_input, 
+    div#containerOutroEndereco, 
+    #containerReincidenciaCheck,
+    .delete-evidencia-btn, 
+    #delete_relatorio_antigo_btn,
+    button[onclick="imprimirRelatorio()"],
+    textarea#descricao_problema_novo 
+     {
+        display: none !important;
+    }
+
+    .print-section.print-visible { 
+        display: block !important;
+        grid-column: span 4 / span 4 !important; 
+        margin-top: 8px !important;
+        page-break-before: auto; 
+    }
+    .print-section.print-visible .print-label { 
+        font-size: 9pt !important; 
+        color: #333333 !important; 
+        font-weight: 500 !important;
+        margin-bottom: 1px !important; 
+        line-height: 1.2 !important;
+        display: block !important; 
+    }
+
+    #secaoDetalhesPedido, #secaoInfoPerda { 
+        display: block !important; margin-bottom: 10px !important; page-break-after: auto !important;
+    }
+    #secaoDetalhesPedido h2, 
+    #secaoInfoPerda h2,
+    #secaoAnexarEvidencia h2,
+    #secaoRelatorioAntigo h2 { 
+        font-size: 13pt !important; font-weight: 600 !important; color: #000000 !important;
+        margin-top: 15px !important; margin-bottom: 8px !important;
+        border-bottom: 1px solid #999999 !important; padding-bottom: 3px !important;
+        page-break-after: avoid !important;
+    }
+     #secaoDetalhesPedido h2:first-child, #secaoInfoPerda h2:first-child {
+        margin-top: 0 !important; 
+    }
+
+    #secaoDetalhesPedido .grid,
+    #secaoInfoPerda .grid { 
+        gap: 8px 12px !important; margin-bottom: 8px !important; 
+    }
+    #secaoDetalhesPedido .md\:col-span-4,
+    #secaoInfoPerda .md\:col-span-3 { 
+         grid-column: span var(--tw-span) / span var(--tw-span) !important; 
+    } 
+    @media (min-width: 768px) { 
+        #secaoDetalhesPedido .md\:col-span-4 { grid-column: span 4 / span 4 !important; }
+        #secaoInfoPerda .md\:col-span-3 { grid-column: span 3 / span 3 !important; }
+    }
+
+    #secaoDetalhesPedido .form-label:not(.print-label),
+    #secaoInfoPerda .form-label { 
+        font-size: 9pt !important; color: #333333 !important; font-weight: 500 !important;
+        margin-bottom: 1px !important; line-height: 1.2 !important;
+    }
+
+    #secaoDetalhesPedido input[type="date"], 
+    #secaoDetalhesPedido input[type="text"], 
+    #secaoInfoPerda input[type="text"] { 
+        font-size: 10pt !important; 
+        color: #000000 !important; 
+        padding: 6px 8px !important; 
+        margin-bottom: 4px !important; 
+        background-color: #ffffff !important; 
+        border: 1px solid #D1D5DB !important; 
+        border-radius: 0.375rem !important; 
+        line-height: 1.3 !important; 
+        word-break: break-word; 
+        box-shadow: none !important; 
+        width: calc(100% - 18px) !important; 
+        -webkit-appearance: none !important; 
+        appearance: none !important;
+        height: auto !important; 
+        min-height: 30px !important; 
+        box-sizing: border-box !important; 
+    }
+
+    #secaoDetalhesPedido select,
+    #secaoInfoPerda select {
+        font-size: 10pt !important; 
+        color: #000000 !important; 
+        padding: 6px 8px !important;
+        padding-right: 2.5rem !important; 
+        margin-bottom: 4px !important; 
+        background-color: #ffffff !important; 
+        border: 1px solid #D1D5DB !important; 
+        border-radius: 0.375rem !important; 
+        line-height: 1.3 !important; 
+        word-break: break-word; 
+        box-shadow: none !important;
+        width: calc(100% - 18px) !important; 
+        -webkit-appearance: none !important; 
+        appearance: none !important;
+        height: auto !important;
+        min-height: 32px !important; 
+        box-sizing: border-box !important;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
+        background-position: right 0.5rem center !important;
+        background-repeat: no-repeat !important;
+        background-size: 1.5em 1.5em !important;
+    }
+    
+    #secaoDetalhesPedido textarea, 
+    #secaoInfoPerda textarea:not(#descricao_problema_novo) { 
+        font-size: 10pt !important; 
+        color: #000000 !important; 
+        padding: 6px 8px !important; 
+        margin-bottom: 4px !important; 
+        background-color: #ffffff !important; 
+        border: 1px solid #D1D5DB !important; 
+        border-radius: 0.375rem !important; 
+        line-height: 1.3 !important; 
+        word-break: break-word !important; 
+        box-shadow: none !important;
+        width: calc(100% - 18px) !important; 
+        height: auto !important; 
+        min-height: 32px !important; 
+        overflow: visible !important; 
+        resize: none !important; 
+        box-sizing: border-box !important;
+        white-space: pre-wrap !important; 
+    }
+    
+    #tipo_venda_select_novo { 
+        display: none !important;
+    }
+    #tipo_venda_print_valor.print-only-block {
+        display: block !important;
+        font-size: 10pt !important;
+        color: #000000 !important;
+        padding: 6px 8px !important; 
+        margin-bottom: 4px !important;
+        background-color: #ffffff !important; 
+        border: 1px solid #D1D5DB !important; 
+        border-radius: 0.375rem !important; 
+        line-height: 1.3 !important;
+        min-height: 32px !important; 
+        box-sizing: border-box !important;
+    }
+    
+    #printNovoEnderecoValor.form-input-print-like {
+        font-size: 10pt !important; 
+        color: #000000 !important; 
+        padding: 6px 8px !important; 
+        margin-bottom: 4px !important; 
+        background-color: #ffffff !important; 
+        border: 1px solid #D1D5DB !important; 
+        border-radius: 0.375rem !important; 
+        line-height: 1.3 !important; 
+        word-break: break-word; 
+        white-space: pre-wrap;   
+        min-height: 32px !important; 
+        width: calc(100% - 18px) !important; 
+        box-sizing: border-box !important;
+        display: block !important; 
+    }
+
+    .print-only-textarea-content {
+        display: block !important; 
+        font-size: 10pt !important; 
+        color: #000000 !important; 
+        padding: 6px 8px !important; 
+        margin-bottom: 4px !important; 
+        background-color: #ffffff !important; 
+        border: 1px solid #D1D5DB !important; 
+        border-radius: 0.375rem !important; 
+        line-height: 1.3 !important; 
+        word-break: break-word !important; 
+        white-space: pre-wrap !important; 
+        min-height: 32px !important; 
+        width: 100%; 
+        box-sizing: border-box !important;
+    }
+    #secaoInfoPerda .md\:col-span-3 { 
+        overflow: visible !important; 
+    }
+
+    #preview_relatorio_antigo_container img.full-width-image-preview {
+        display: block !important;
+        margin: 10px auto !important;    
+        width: 100% !important;          
+        max-width: 100% !important;     
+        height: auto !important;         
+        max-height: 65vh !important;     /* User-specified max-height */
+        object-fit: contain !important;  
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid !important;
+    }
+     #secaoRelatorioAntigo.mb-8 { 
+        margin-bottom: 0 !important;
+    }
+
+    #preview_evidencia_container_novo { 
+        display: flex !important; 
+        flex-wrap: wrap !important; 
+        gap: 10px !important; 
+        page-break-inside: avoid !important;
+        justify-content: flex-start !important; 
+    }
+    #preview_evidencia_container_novo.has-single-image-print { 
+        justify-content: center !important; 
+    }
+
+    #preview_evidencia_container_novo .evidencia-item-wrapper,
+    #preview_evidencia_container_novo img {
+        max-width: 280px !important; 
+        max-height: 280px !important; 
+        object-fit: contain !important;
+        border: 1px solid #cccccc !important; 
+        padding: 2px !important;
+        border-radius: 2px !important; 
+        display: block !important; 
+        margin-left: auto; 
+        margin-right: auto;
+        page-break-inside: avoid !important;
+    }
+    
+    #preview_evidencia_container_novo.has-single-image-print img,
+    #preview_evidencia_container_novo.has-single-image-print .evidencia-item-wrapper {
+        max-width: 90% !important; 
+        max-height: 400px !important; 
+        width: auto !important; 
+        margin-left: auto !important; 
+        margin-right: auto !important; 
+    }
+    
+    div, p, span, img, input, textarea, select { page-break-inside: avoid !important; }
+    h2, h3, h4 { page-break-after: avoid !important; }
+    section:last-of-type { margin-bottom: 0 !important; }
+    *:focus { outline: none !important; box-shadow: none !important; }
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Assistência</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 text-gray-800 p-4 sm:p-6 md:p-8">
+
+    <div class="container mx-auto max-w-3xl bg-white p-6 sm:p-8 rounded-lg shadow-xl relative">
+        <div id="currentDateContainer" class="current-date">
+            <span id="currentDate"></span>
+        </div>
+        <div id="reincidenciaAvisoPrint" class="print-watermark">REINCIDÊNCIA</div>
+        
+        <section id="secaoDetalhesPedido" class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Detalhes do Pedido</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-4 mb-6">
+                <div>
+                    <label for="pedido_antigo" class="block text-sm form-label mb-1">Pedido antigo:</label>
+                    <input type="text" id="pedido_antigo" name="pedido_antigo" class="w-full p-2 border form-input rounded-md shadow-sm" placeholder="Nº Pedido" maxlength="6">
+                </div>
+                <div>
+                    <label for="tipo_venda_select_novo" class="block text-sm form-label mb-1">Tipo:</label>
+                    <select id="tipo_venda_select_novo" name="tipo_venda" class="w-full p-2 border form-select rounded-md shadow-sm h-[42px]" required>
+                        <option value="" disabled selected>Selecione...</option>
+                        <option value="Garantia">Garantia</option>
+                        <option value="Reposição">Reposição</option>
+                    </select>
+                    <span id="tipo_venda_print_valor" class="print-only-block"></span>
+                </div>
+
+                <div>
+                    <label for="data_entrega_novo" class="block text-sm form-label mb-1">Data de entrega:</label>
+                    <input type="date" id="data_entrega_novo" class="w-full p-2 border form-input rounded-md shadow-sm" required>
+                </div>
+
+                <div>
+                    <label for="rota_novo" class="block text-sm form-label mb-1">Rota:</label>
+                    <input type="text" id="rota_novo" name="rota" class="w-full p-2 border form-input rounded-md shadow-sm" placeholder="Ex: POA" maxlength="4">
+                </div>
+                
+                <div class="md:col-span-4" id="containerOutroEndereco">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="outro_endereco_check_novo" class="form-checkbox h-4 w-4 rounded">
+                        <label for="outro_endereco_check_novo" class="ml-2 text-sm text-gray-700 cursor-pointer">Entrega em outro endereço?</label>
+                    </div>
+                    <textarea id="novo_endereco_novo" rows="1" class="w-full p-2 border form-textarea rounded-md shadow-sm mt-2 hidden auto-resize-textarea" placeholder="Digite o novo endereço aqui..."></textarea>
+                </div>
+                
+                <div class="md:col-span-4" id="containerReincidenciaCheck">
+                     <div class="flex items-center">
+                        <input type="checkbox" id="reincidencia_check_novo" class="form-checkbox h-4 w-4 rounded">
+                        <label for="reincidencia_check_novo" class="ml-2 text-sm text-gray-700 cursor-pointer">É reincidência?</label>
+                    </div>
+                </div>
+            </div> <div id="printNovoEnderecoContainer" class="md:col-span-4 print-section" style="display: none;">
+                <label class="block text-sm form-label mb-1 print-label">Novo endereço de entrega:</label>
+                <p id="printNovoEnderecoValor" class="form-input-print-like"></p>
+            </div>
+
+        </section> <section id="secaoInfoPerda" class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Informações da perda</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4 mb-6">
+                <div class="md:col-span-3"> 
+                    <label for="descricao_problema_novo" class="block text-sm form-label mb-1">Descrição do problema:</label>
+                    <textarea id="descricao_problema_novo" name="descricao_problema" rows="1" class="w-full p-2 border form-textarea rounded-md shadow-sm text-sm auto-resize-textarea" placeholder="Detalhe o problema encontrado..."></textarea>
+                    <div id="descricao_problema_print_area" class="print-only-textarea-content" style="display: none;"></div>
+                </div>
+                <div>
+                    <label for="setor_maquina" class="block text-sm form-label mb-1">Setor/Máquina:</label>
+                    <input type="text" id="setor_maquina" name="setor_maquina" class="w-full p-2 border form-input rounded-md shadow-sm" placeholder="Ex: Corte">
+                </div>
+                <div>
+                    <label for="turno_perda" class="block text-sm form-label mb-1">Turno:</label>
+                    <select id="turno_perda" name="turno_perda" class="w-full p-2 border form-select rounded-md shadow-sm h-[42px]">
+                        <option value="" disabled selected>Selecione...</option>
+                        <option value="Diurno">Diurno</option>
+                        <option value="Noturno">Noturno</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="funcionario_perda" class="block text-sm form-label mb-1">Funcionário:</label>
+                    <input type="text" id="funcionario_perda" name="funcionario_perda" class="w-full p-2 border form-input rounded-md shadow-sm" placeholder="Nome do funcionário">
+                </div>
+            </div>
+        </section>
+        
+        <section id="secaoRelatorioAntigo" class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Relatório Antigo</h2>
+            <div class="form-group">
+                <input type="file" id="relatorio_antigo_input" accept="image/*" class="block w-full text-sm text-gray-500
+                    file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold
+                    file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer mb-2">
+                <div id="preview_relatorio_antigo_container" class="mt-2 hidden relative">
+                    <img id="relatorio_antigo_img_preview" src="" alt="Pré-visualização do Relatório Antigo" class="full-width-image-preview border rounded-md shadow-sm" style="display: none;">
+                    <button id="delete_relatorio_antigo_btn" class="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full text-xs w-6 h-6 flex items-center justify-center" title="Excluir Imagem do Relatório Antigo" style="display: none;">&times;</button>
+                </div>
+                 </div>
+        </section>
+
+        <section id="secaoAnexarEvidencia" class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Evidência do problema</h2>
+            <div class="form-group">
+                <input type="file" id="evidencia_problema_novo" accept="image/*" multiple class="block w-full text-sm text-gray-500
+                    file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold
+                    file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer mb-2">
+                <div id="preview_evidencia_container_novo" class="mt-2 hidden flex flex-wrap gap-2">
+                    </div>
+                 </div>
+        </section>
+        
+        <div class="mt-8 text-center">
+            <button onclick="imprimirRelatorio()" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-md transition duration-150 ease-in-out">
+                Imprimir / Salvar Relatório
+            </button>
+        </div>
+
+        <div id="mensagemErro" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md hidden" role="alert">
+            <p id="textoMensagemErro"></p>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
