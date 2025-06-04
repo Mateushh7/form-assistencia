@@ -372,3 +372,69 @@ function imprimirRelatorio() {
         if(relatorioAntigoImgPreview) relatorioAntigoImgPreview.style.display = 'none';
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+
+    const pedido = params.get('pedido');
+    const problema = params.get('problema');
+    const imagemUrlOriginal = params.get('imagem');
+
+    // Preenche os campos de texto do formulário.
+    if (pedido) {
+        document.getElementById('pedido_antigo').value = pedido;
+    }
+
+    if (problema) {
+        document.getElementById('descricao_problema_novo').value = problema;
+    }
+
+    // Processa o link da imagem do Google Drive para exibi-la.
+    if (imagemUrlOriginal) {
+        // Converte o link de compartilhamento do Drive para um link de visualização direta.
+        const imageUrlDireto = transformaLinkDrive(imagemUrlOriginal);
+        
+        if (imageUrlDireto) {
+            const previewContainer = document.getElementById('preview_evidencia_container_novo');
+            
+            // Cria o elemento da imagem.
+            const imgElement = document.createElement('img');
+            imgElement.src = imageUrlDireto;
+            imgElement.alt = 'Evidência do problema carregada da planilha';
+            imgElement.className = 'w-full h-auto border rounded-md shadow-sm';
+
+            // Adiciona a imagem ao container de preview e o torna visível.
+            previewContainer.innerHTML = '';
+            previewContainer.appendChild(imgElement);
+            previewContainer.classList.remove('hidden');
+        }
+    }
+});
+
+/**
+ * Transforma um link padrão do Google Drive em um link direto para a imagem,
+ * que pode ser usado na tag <img>.
+ * @param {string} url - A URL original do Google Drive.
+ * @returns {string|null} - A URL direta ou null se o link for inválido.
+ */
+function transformaLinkDrive(url) {
+    let fileId = null;
+    // Tenta extrair o ID do arquivo de diferentes formatos de URL do Drive.
+    if (url.includes('open?id=')) {
+        fileId = url.split('open?id=')[1].split('&')[0];
+    } else if (url.includes('/d/')) {
+        fileId = url.split('/d/')[1].split('/')[0];
+    }
+    
+    // Se um ID foi encontrado, retorna a URL no formato de visualização direta.
+    if (fileId) {
+        return `https://drive.google.com/uc?id=${fileId}`;
+    }
+    
+    // Retorna null se não conseguiu extrair o ID.
+    return null;
+}
+
+// Suas outras funções, como a de imprimir, podem continuar aqui.
+function imprimirRelatorio() {
+    window.print();
+}
