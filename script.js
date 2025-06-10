@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentDateEl.textContent = `${day}/${month}/${year}`;
     }
 
-    // --- NOVA LÓGICA: PREENCHER FORMULÁRIO A PARTIR DA URL ---
+    // --- LÓGICA PRINCIPAL: PREENCHER FORMULÁRIO A PARTIR DA URL ---
     preencherFormularioPelaURL();
 
     // Configuração inicial dos listeners de eventos
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * NOVO: Lê os parâmetros da URL e preenche os campos do formulário.
+ * Lê os parâmetros da URL e preenche os campos do formulário.
  */
 function preencherFormularioPelaURL() {
     const params = new URLSearchParams(window.location.search);
@@ -152,17 +152,29 @@ function preencherFormularioPelaURL() {
 }
 
 /**
- * NOVO: Converte um link de compartilhamento do Google Drive em um link de visualização direta.
+ * Converte um link de compartilhamento do Google Drive em um link de visualização direta.
  * @param {string} url - O link de compartilhamento do Google Drive.
  * @returns {string|null} - O URL de visualização direta ou null se o ID não for encontrado.
  */
 function converterLinkGoogleDrive(url) {
-    const regex = /\/d\/(.+?)(?:\/view|\?usp=sharing|$)/;
-    const match = url.match(regex);
-    if (match && match[1]) {
-        const fileId = match[1];
+    let fileId = null;
+    
+    // Tenta extrair o ID de links no formato: /file/d/FILE_ID/view
+    const matchD = url.match(/\/d\/([a-zA-Z0-9_-]{28,})/);
+    if (matchD && matchD[1]) {
+        fileId = matchD[1];
+    } else {
+        // Tenta extrair o ID de links no formato: /open?id=FILE_ID
+        const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]{28,})/);
+        if (matchId && matchId[1]) {
+            fileId = matchId[1];
+        }
+    }
+    
+    if (fileId) {
         return `https://drive.google.com/uc?export=view&id=${fileId}`;
     }
+    
     console.warn('Não foi possível extrair o ID do arquivo do Google Drive do link:', url);
     return null;
 }
