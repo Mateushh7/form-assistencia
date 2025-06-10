@@ -152,7 +152,7 @@ function preencherFormularioPelaURL() {
 }
 
 /**
- * Converte um link de compartilhamento do Google Drive em um link de visualização direta.
+ * CORRIGIDO: Converte um link de compartilhamento do Google Drive em um link de visualização direta e confiável.
  * @param {string} url - O link de compartilhamento do Google Drive.
  * @returns {string|null} - O URL de visualização direta ou null se o ID não for encontrado.
  */
@@ -160,11 +160,13 @@ function converterLinkGoogleDrive(url) {
     let fileId = null;
     
     // Tenta extrair o ID de links no formato: /file/d/FILE_ID/view
+    // Ex: https://drive.google.com/file/d/1ZII1h4i-TyAVtIhSX2kJdNWXP9akHNuw/view?usp=sharing
     const matchD = url.match(/\/d\/([a-zA-Z0-9_-]{28,})/);
     if (matchD && matchD[1]) {
         fileId = matchD[1];
     } else {
         // Tenta extrair o ID de links no formato: /open?id=FILE_ID
+        // Ex: https://drive.google.com/open?id=1ZII1h4i-TyAVtIhSX2kJdNWXP9akHNuw
         const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]{28,})/);
         if (matchId && matchId[1]) {
             fileId = matchId[1];
@@ -172,12 +174,14 @@ function converterLinkGoogleDrive(url) {
     }
     
     if (fileId) {
-        return `https://drive.google.com/uc?export=view&id=${fileId}`;
+        // Usa o formato de URL mais confiável para embutir imagens
+        return `https://lh3.googleusercontent.com/d/${fileId}`;
     }
     
     console.warn('Não foi possível extrair o ID do arquivo do Google Drive do link:', url);
     return null;
 }
+
 
 /**
  * Renderiza as visualizações de todas as evidências (arquivos e URLs).
@@ -196,6 +200,11 @@ function renderEvidenciaPreviews() {
 
             const imgElement = document.createElement('img');
             imgElement.alt = `Evidência`;
+            // Adiciona um handler de erro para o caso da imagem não carregar
+            imgElement.onerror = function() {
+                this.alt = 'Falha ao carregar imagem';
+                this.src = 'https://placehold.co/250x250/e9ecef/6c757d?text=Erro!';
+            };
 
             const deleteBtn = document.createElement('button');
             deleteBtn.innerHTML = '&times;';
