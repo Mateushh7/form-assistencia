@@ -472,7 +472,7 @@ textarea::-webkit-scrollbar-thumb:hover {
         max-width: 280px !important; 
         max-height: 280px !important; 
         object-fit: contain !important;
-        border: 1px solid #cccccc !important; 
+        /*border: 1px solid #cccccc !important;*/
         padding: 2px !important;
         border-radius: 2px !important; 
         display: block !important; 
